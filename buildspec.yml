@@ -3,12 +3,14 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: stable
+      nodejs: latest
   
   pre_build:
     commands:
       - echo log in to Amazon ECR...
-      - apk update && apk add --no-cache aws-cli
+      - pip install --upgrade pip
+      - pip install --upgrade awscli==1.18.17
+     # - apk update && apk add --no-cache aws-cli
       - aws --version
       - echo $AWS_DEFAULT_REGION
       - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 883013188679.dkr.ecr.us-west-2.amazonaws.com
